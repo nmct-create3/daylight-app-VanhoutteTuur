@@ -2,14 +2,28 @@
 #FONTS
 \*------------------------------------*/
 
+
+
 /*------------------------------------*\
 #Variables
 \*------------------------------------*/
 
 :root {
     /* colors */
+    --color-alpha:  #CCE7FF;
+    --color-beta: #0f3557;
+
+    --color-front: var(--color-beta);
+    --color-back:  var(--color-alpha);
+
+
+    --global-background: var(--color-back);
+    --global-text-color: var(--color-front);
+    --global-logo-fill: var(--color-front);
+    --global-border-color: var(--color-front);
 
     /* opacity */
+    --global-muted-opacity: 0.6;
 
     /* transitions */
 }
@@ -25,12 +39,24 @@
 */
 
 html {
+    /* POSITIONING */
+
+    /* BOX MODEL */
+    box-sizing: border-box;
+
+    /* FONT */
     font-size: 16px;
     line-height: 1.5;
-    font-family: Helvetica, arial, sans-serif;
-    box-sizing: border-box;
+    font-family: 'Work Sans', Helvetica, arial, sans-serif;
+    font-feature-settings: "zero" 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    
+    /* APPEARANCE */
+    background-color: var(--global-background);
+    color: var(--global-text-color);
+
+    /* OTHER */
 }
 
 *,
@@ -47,14 +73,14 @@ html {
 */
 
 ::-moz-selection {
-    background: red;
-    color: white;
+    background: var(--color-front);
+    color: var(--color-back);
     text-shadow: none;
 }
 
 ::selection {
-    background: red;
-    color: white;
+    background: var(--color-front);
+    color: var(--color-back);
     text-shadow: none;
 }
 
@@ -249,7 +275,12 @@ input::placeholder {
 */
 
 .c-logo {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 16px;
 
+    display: flex;
+    align-items: center;
 }
 
 /*
@@ -259,11 +290,14 @@ input::placeholder {
 */
 
 .c-sun {
-
+    display: block;
+    width: 1.375rem;
+    height: 1.375rem;
+    fill: var(--global-logo-fill);
 }
 
 .c-logo .c-sun {
-
+    margin-right: 0.5rem;
 }
 
 /*
@@ -272,11 +306,83 @@ input::placeholder {
     Main app wrapper
 */
 
+.c-app {
+    box-sizing: content-box; /* Padding optellen bij de width, ipv toevoegen aan binnenkant */
+    max-width: 25rem;
+    padding: 1rem 2rem;
+    margin: 0 auto;
+
+    min-height: calc(100vh - 2*1rem);
+    display: flex;
+    flex-direction: column;
+    
+    
+}
+
+.c-app__summary {
+    font-size: 1.75rem;
+    line-height: 2.5rem;
+
+}
+
 /*
     Component: Horizon
     ---
     Horizon with sun visualisation
 */
+
+.c-horizon {
+    margin-top: auto;
+}
+
+.c-horizon__sky-wrapper {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+    padding-top: 22px;
+    padding-right: 40px;
+
+    
+}
+
+.c-horizon__sky {
+    position: relative;
+    height: 100%;
+}
+
+.c-horizon__sun {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+
+    transform: translateY(50%);
+}
+
+.c-horizon__sun::before {
+    display: block;
+    text-align: center;
+    margin-bottom: 8px;
+    
+    content: attr(data-time);
+    font-size: 0.75rem;
+    line-height: 0.875rem;
+}
+
+.c-horizon__line {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid var(--global-border-color);
+
+    padding-top: 0.625rem;
+
+}
+.c-horizon__time {
+    font-size: 0.75rem;
+    line-height: 0.875rem;
+}
 
 /*------------------------------------*\
 #UTILITIES
@@ -287,6 +393,10 @@ input::placeholder {
     Mute with opacity
 */
 
+.u-muted {
+    opacity: var(--global-muted-opacity);
+}
+
 /*------------------------------------*\
 #STATES
 \*------------------------------------*/
@@ -295,7 +405,13 @@ input::placeholder {
     Change the theme using CSS vars.
 */
 
+
 /* Night version: just switch the light and dark vars */
+
+.is-night {
+    --color-back: var(--color-beta);
+    --color-front: var(--color-alpha);
+}
 
 /*------------------------------------*\
 #MEDIA
